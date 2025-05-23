@@ -103,8 +103,14 @@ app.use((req,res,next)=>{
 
 
 app.use("/listings",listingRouter);
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 app.use("/listings/:id/reviews",reviewsRouter);
 app.use("/",userRouter);
+
+
 
 app.use((err,req,res,next)=>{
     let {statusCode=500, message="Somthing went wrong"} =err;
