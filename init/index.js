@@ -1,10 +1,10 @@
 const mongoose=require("mongoose");
 
 const initData =require("./data.js");
-const listing=require("../model/listing.js");
+const Listing=require("../models/listing.js");
 
 
-const mongo_url="mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
 
 
 main()
@@ -15,13 +15,17 @@ main()
     console.log(err);
 });
 async function main() {
-    await mongoose.connect(mongo_url);
+    await mongoose.connect(MONGO_URL);
 }
 
 
 const initDB=async()=>{
-   await listing.deleteMany({});
-   await listing.insertMany(initData.data);
+   await Listing.deleteMany({});
+   initData.data =initData.data.map((obj)=>({
+    ...obj,
+    Owner:"6829805498f2b995d2ae2ebc",
+   }))
+   await Listing.insertMany(initData.data);
    console.log("data was initialized");
 }
 
